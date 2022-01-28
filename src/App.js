@@ -1,24 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
 
+import {BrowserRouter, Routes, Route } from 'react-router-dom'
+import MainContext from './cotexts/MainContext';
+import { useState } from 'react';
+import Mainpage from './Pages/MainPage';
+import RegistrationPage from './Pages/RegistrationPage'
+import Loginpage from './Pages/LoginPage';
+import Toolbar from './components/ToolBar';
+import Createpostpage from './Pages/CreatePostPage';
+
+
+
 function App() {
+  const [getUsers, setUsers] = useState([])
+  const [getCurrentUser, setCurrentUser] = useState(null)
+  const [getCurrentPage, setCurrentPage] = useState("")
+  const [getPosts, setPosts] = useState([])
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+
+    <MainContext.Provider value={{getUsers, setUsers, setCurrentUser, getCurrentUser, getPosts, setPosts}}>
+      
+      <BrowserRouter> 
+      
+      <Toolbar user={getCurrentUser} page={getCurrentPage}/>
+
+      <Routes>
+
+      <Route path='/register' element={<RegistrationPage setCurrentPage={setCurrentPage} />}/>
+      
+      <Route path='/main' element={<Mainpage setCurrentPage={setCurrentPage} posts={getPosts}/>}/>
+
+      <Route path='/login' element={<Loginpage setCurrentPage={setCurrentPage}/>}/>
+      
+      <Route path='/createpost' element={<Createpostpage setCurrentPage={setCurrentPage}/>}/>
+
+      </Routes>
+
+      </BrowserRouter>
+      
+      </MainContext.Provider>
+
   );
 }
 
