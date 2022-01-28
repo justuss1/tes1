@@ -14,3 +14,4 @@ const Mainpage = ({setCurrentPage, posts}) => {
 }
 
 export default Mainpage;
+git add README.md
